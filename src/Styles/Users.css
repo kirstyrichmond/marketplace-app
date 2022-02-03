@@ -1,0 +1,11 @@
+.users-list {
+list-style-type: none;
+}
+
+.user-card {
+margin-bottom: 20px;
+}
+
+.user-image {
+width: 200px;
+}
