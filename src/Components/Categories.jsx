@@ -14,10 +14,12 @@ const Categories = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
+    //console.log(event);
     setCatSelection("default");
   }
 
   function handleChange(event) {
+    //console.log(event)
     setCatSelection(event.target.value);
   }
 
@@ -36,6 +38,9 @@ const Categories = () => {
               return <option>{category.category_name}</option>;
             })}
           </select>
+          <button className="button" type="submit">
+            Search items
+          </button>
         </form>
       </div>
     </>
