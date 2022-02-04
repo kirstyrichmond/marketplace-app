@@ -16,21 +16,20 @@ export const getItems = () => {
   });
 };
 
+export const getItemsByCategory = (category) => {
+  return marketPlaceApi.get(`/items?category_name=${category}`).then((res) => {
+    console.log(res.data);
+    return res.data;
+  });
+};
 export const getUsers = () => {
-    return marketPlaceApi.get(`/users`).then((res) => {
-        
+  return marketPlaceApi.get(`/users`).then((res) => {
     return res.data.users;
   });
 };
 
 export const getSingleUser = (username) => {
-    
-    return marketPlaceApi.get(`/users/${username}`).then((res) => {
-        
+  return marketPlaceApi.get(`/users/${username}`).then((res) => {
     return res.data.user;
   });
 };
-
-
-
-

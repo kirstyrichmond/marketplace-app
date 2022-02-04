@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getItems } from "../Utils/api";
+import { getItems, getItemsByCategory } from "../Utils/api";
 import "../Styles/items.css";
 import Categories from "./Categories";
 
-const Items = () => {
+const Items = ({ handleChange }) => {
   const [items, setItems] = useState([]);
+
+  // console.log(handleChange)
+
+  getItemsByCategory(handleChange)
 
   useEffect(() => {
     getItems().then((res) => {
