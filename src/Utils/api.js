@@ -10,18 +10,16 @@ export const getCategories = () => {
   });
 };
 
-export const getItems = () => {
-  return marketPlaceApi.get("/items").then((res) => {
+export const getItems = (category) => {
+  let query = "/items"
+  if (category !== "All") {
+    query += `?category_name=${category}`
+  } 
+  return marketPlaceApi.get(query).then((res) => {
     return res.data.items;
   });
 };
 
-export const getItemsByCategory = (category) => {
-  return marketPlaceApi.get(`/items?category_name=${category}`).then((res) => {
-    console.log(res.data);
-    return res.data;
-  });
-};
 export const getUsers = () => {
   return marketPlaceApi.get(`/users`).then((res) => {
     return res.data.users;
@@ -33,3 +31,5 @@ export const getSingleUser = (username) => {
     return res.data.user;
   });
 };
+
+

@@ -4,23 +4,22 @@ import { getItems, getItemsByCategory } from "../Utils/api";
 import "../Styles/items.css";
 import Categories from "./Categories";
 
-const Items = ({ handleChange }) => {
+const Items = (props) => {
+  const { catSelection } = props;
   const [items, setItems] = useState([]);
-
-  // console.log(handleChange)
-
-  getItemsByCategory(handleChange)
-
+  console.log(items);
   useEffect(() => {
-    getItems().then((res) => {
+    getItems(catSelection).then((res) => {
       setItems(res);
     });
-  }, []);
+  }, [catSelection]);
+
 
   return (
     <div>
-      <h1>In Items</h1>
-      <Categories />
+      <h1>Items for sale!</h1>
+      <Link to ="/add_item"><button type="submit">Add a sale item</button></Link>
+
       <ul>
         {items.map((item) => {
           return (
@@ -28,7 +27,9 @@ const Items = ({ handleChange }) => {
               <div className="item-list">
                 <li>{item.item_name}</li>
                 <li>{item.description}</li>
-                <li><img className="product-image" src={item.img_url}/></li>
+                <li>
+                  <img className="product-image" src={item.img_url} />
+                </li>
                 <li>{item.price}</li>
                 <li>{item.category_name}</li>
               </div>

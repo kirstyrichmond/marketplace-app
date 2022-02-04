@@ -10,6 +10,7 @@ import Users from "./Components/Users";
 import User from "./Components/User";
 import { useState } from "react";
 import UserContext from "./Components/LoggedInUser";
+import AddItem from "./Components/AddItem";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({
@@ -17,6 +18,9 @@ function App() {
     avatar_url: "newUrl",
     kudos: 5,
   });
+
+  const [catSelection, setCatSelection] = useState("All");
+  
 
   const isLoggedIn = loggedInUser !== null;
 
@@ -27,12 +31,12 @@ function App() {
           <Nav loggedInUser={loggedInUser} />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/items" element={<Items />} />
+            <Route path="/items" element={<><Categories catSelection={catSelection} setCatSelection={setCatSelection} /><Items catSelection={catSelection} /></>} />
             <Route path="/users" element={<Users />} />
             <Route path="/users/:username" element={<User />} />
             <Route path="/basket" element={<Basket />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/add_item" element={<AddItem />} />
           </Routes>
         </div>
       </UserContext.Provider>
