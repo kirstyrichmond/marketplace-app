@@ -1,9 +1,17 @@
-.item-list, .item-list:link {
-    list-style-type: none;
-    margin-bottom: 20px;
-    color: black;
-    text-decoration: none;
+.item-list {
+  background-color: rgb(216, 216, 216);
+  text-align: center;
+  border-radius: 4px;
+  margin-left: 0px;
 }
-.product-image{
-    width: 200px;
+
+.item-list,
+.item-list:link {
+  list-style-type: none;
+  margin-bottom: 20px;
+  color: black;
+  text-decoration: none;
+}
+.product-image {
+  width: 200px;
 }

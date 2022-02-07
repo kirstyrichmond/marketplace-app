@@ -26,11 +26,11 @@ const Items = (props) => {
             <Link key={item.item_id} to={`/items/${item.item_id}`}>
               <div className="item-list">
                 <li>{item.item_name}</li>
-                <li>{item.description}</li>
                 <li>
-                  <img className="product-image" src={item.img_url} />
+                  <img alt={item.item_name} className="product-image" src={item.img_url} />
                 </li>
-                <li>{item.price}</li>
+                <li>{item.description}</li>
+                <li>£{item.price}</li>
                 <li>{item.category_name}</li>
               </div>
             </Link>

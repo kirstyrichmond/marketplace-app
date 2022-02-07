@@ -1,74 +1,122 @@
-import React, {useState} from "react";
-import axios from "axios";
-
-
+import React, {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
+import { postItem, getCategories } from "../Utils/api";
 
 const AddItem = () => {
+  const navigate = useNavigate()
+  const [categories, setCategories] = useState([])
+  const [newItemName, setNewItemName] = useState("")
+  const [newItemDesc, setNewItemDesc] = useState("")
+  const [newItemURL, setNewItemURL] = useState("")
+  const [newItemPrice, setNewItemPrice] = useState("")
+  const [newCategory, setNewCategory] = useState("")
 
-    const [item, setItem] = useState({
-        item_name: "",
-          description: "" ,
-          img_url: "",
-          price: 0,
-          category_name: ""
-    });
+    useEffect(() => {
+      getCategories().then((catSelection) => {
+        setCategories(catSelection)
+      })
+    }, [])
 
-    console.log(item)
-    function handleSubmit(event) {
-      
+    const handleItemNameChange = (event) => {
+      setNewItemName(event.target.value)
+    }
+    const handleItemDescChange = (event) => {
+      setNewItemDesc(event.target.value)
+    }
+    const handleItemURLChange = (event) => {
+      setNewItemURL(event.target.value)
+    }
+    const handleItemPriceChange = (event) => {
+      setNewItemPrice(event.target.value)
+    }
+    const handleCategoryChange = (event) => {
+      setNewCategory(event.target.value)
+    }
+
+    const handleSubmit = (event) => {
       event.preventDefault();
+
       const newItem = {
-          "item_name": item.item_name,
-          "description": item.description,
-          "img_url": item.img_url,
-          "price": item.price,
-          "category_name": item.category_name
+          item_name: newItemName,
+          description: newItemDesc,
+          img_url: newItemURL,
+          price: newItemPrice,
+          category_name: newCategory
       }
-      console.log(newItem);
-      axios.post("https://nc-marketplace.herokuapp.com/api/items", { newItem }).then((res) => {
-          console.log(res.data)
+
+      postItem(newItem).then((item) => {
+        console.log(item)
+        const { item_id } = item
+        navigate(`/items/${item_id}`)
+      })
+      .catch((err) => {
+        console.log(err)
       })
   }
-    
-    function handleChange(event) {
-        console.log({ item_name: event.target.value } description: event.target.value  })
-        setItem()
-    }
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <h3>Add a new item:</h3>
+
+      <form className="add-item-form" onSubmit={handleSubmit}>
+        <label>Name:</label>
         <input
+        required
           type="text"
-          name="item_name"
+          value={newItemName}
+          id="itemName"
+          name="itemName"
           placeholder="Item name"
-          onChange={handleChange}
+          onChange={handleItemNameChange}
         ></input>
+        <br></br>
+        <label>Description:</label>
         <input
+          required
           type="text"
-          name="description"
+          value={newItemDesc}
+          name="itemDesc"
+          id="itemDesc"
           placeholder="Description"
-          onChange={handleChange}
+          onChange={handleItemDescChange}
         ></input>
+        <br></br>
+        <label>Image URL:</label>
         <input
-          type="text"
-          name="img_url"
+          required
+          type="url"
+          value={newItemURL}
+          name="itemURL"
+          id="itemURL"
           placeholder="Image URL"
-          onChange={handleChange}
+          onChange={handleItemURLChange}
         ></input>
+        <br></br>
+        <label>Price:</label>
         <input
-          type="text"
-          name="price"
+          type="number"
+          value={newItemPrice}
+          name="itemPrice"
+          id="itemPrice"
           placeholder="Price"
-          onChange={handleChange}
+          onChange={handleItemPriceChange}
         ></input>
-        <select name="category_name">
-          <option value="Electronics">Electronics</option>
-          <option value="Household">Household</option>
-          <option value="Clothing">Clothing</option>
-          <option value="Other">Other</option>
+        <br></br>
+        <select value={newCategory} name="itemCategory" id="itemCategory" onChange={handleCategoryChange}>
+          <option value="" disabled defaultValue>Select Category</option>
+
+          {
+            categories.map((category) => {
+              return (
+                <option key={category.category_name} value={category.category_name}>
+                  {category.category_name}
+                </option>
+              )
+            })
+          }
         </select>
-        <button type="submit">Add</button>
+        <br></br>
+        <button type="submit" value="Submit" className="submit-btn">Submit</button>
       </form>
     </div>
   );

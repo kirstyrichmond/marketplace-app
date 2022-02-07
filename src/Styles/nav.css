@@ -1,0 +1,18 @@
+nav {
+  background-color: rgb(210, 210, 210);
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+}
+
+.nav-btn {
+  padding: 5px 10px;
+  color: #000;
+  margin: 5px 10px;
+  display: block;
+}
+
+.nav_avatar {
+  width: 100px;
+  border-radius: 50px;
+}
